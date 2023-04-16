@@ -51,15 +51,12 @@ export default {
       return this.total;
     },
     multiply(first, second) {
-      if (parseInt(first) === 0 || parseInt(second) === 0) {
-        return false;
-      }
       this.total = parseInt(first) * parseInt(second);
       return this.total;
     },
     divide(first, second) {
       if (parseInt(first) === 0 || parseInt(second) === 0) {
-        return false;
+        return NaN;
       }
       this.total = parseInt(first) / parseInt(second);
       return this.total;

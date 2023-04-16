@@ -24,11 +24,9 @@ describe("Calculate.vue", () => {
       expect(vm.multiply(first, second)).toBeNaN();
       expect(vm.divide(first, second)).toBeNaN();
     });
-    it("0으로 곱하거나 나누면 false를 리턴한다.", () => {
+    it("0으로 나누면 NaN 리턴한다.", () => {
       second = 0;
-      // toBeFalsy : if 문의 리턴값이 false 인 경우
-      expect(vm.multiply(first, 0)).toBe(false);
-      expect(vm.divide(first, 0)).toBe(false);
+      expect(vm.divide(first, 0)).toBeNaN();
     });
   });
   describe("사칙연산 테스트", () => {
@@ -43,8 +41,11 @@ describe("Calculate.vue", () => {
       expect(vm.multiply(first, second)).toBe(first * second);
     });
     it("두 수의 나눗셈 결과는 몫과 같다.", () => {
-      // toBeCloseTo : 소수점 다음에 확인할 자리 수를 제어하는데 사용
-      expect(vm.divide(first, second)).toBeCloseTo(first / second);
+      if (parseInt(first) === 0 || parseInt(second) === 0) {
+        expect(vm.divide(first, second)).toBeNaN();
+      } else {
+        expect(vm.divide(first, second)).toBe(first / second);
+      }
     });
   });
 });
