@@ -1,12 +1,14 @@
 <template>
   <div>{{ obj }}</div>
   <div class="name">{{ refName }}</div>
-  <button
-    class="btn btn-primary"
-    v-on:click="updateName(refName === 'su' ? 'sean' : 'su')"
-  >
-    Click
-  </button>
+  <input
+    v-bind:type="refType"
+    v-bind:value="refName"
+    v-model="refName"
+    v-on:change="updateName(refName)"
+  />
+  <!-- 양방향 바인딩??? -->
+  <button class="btn btn-primary" v-on:click="initName()">초기화</button>
 </template>
 
 <script>
@@ -21,9 +23,14 @@
       const obj = reactive({cnt: 1});
       let name = "su";
       let refName = ref("su"); // ref 의 값은 문자열, 숫자, 배열, 오브젝트 타입 모두 가능
+      let refType = ref("text"); // ref 의 값은 문자열, 숫자, 배열, 오브젝트 타입 모두 가능
       const greeting = name => {
         return `Hello! ${name}`;
       };
+
+      function initName() {
+        updateName("이름없음");
+      }
 
       function updateName(newName) {
         name = newName; // 템플릿에 바로 반영되지는 않음
@@ -37,8 +44,10 @@
       return {
         name,
         greeting,
+        initName,
         updateName,
         refName,
+        refType,
         obj,
       };
     },
