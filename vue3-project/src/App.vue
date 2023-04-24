@@ -1,13 +1,8 @@
 <template>
   <div>{{ obj }}</div>
   <div class="name">{{ refName }}</div>
-  <input
-    v-bind:type="refType"
-    v-bind:value="refName"
-    v-model="refName"
-    v-on:change="updateName(refName)"
-  />
   <!-- 양방향 바인딩??? -->
+  <input v-bind:type="refType" v-bind:value="refName" v-model="refName" />
   <button class="btn btn-primary" v-on:click="initName()">초기화</button>
 </template>
 
