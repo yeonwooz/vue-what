@@ -6,7 +6,7 @@
         <input
           class="form-control"
           type="text"
-          v-model="name"
+          v-model="todo"
           placeholder="Type new to-do"
         />
       </div>
@@ -33,6 +33,7 @@
       const onSubmit = () => {
         todos.value.push({
           id: Date.now(),
+          subject: todo.value,
         });
       };
 
