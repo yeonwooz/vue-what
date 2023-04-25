@@ -1,4 +1,7 @@
 <template>
+  <div v-show="toggle">true</div>
+  <div v-show="!toggle">false</div>
+  <button class="btn btn-secondary" @click="onToggle">TOGGLE</button>
   <div class="container">
     <h2>TO-DO LIST</h2>
     <form @submit.prevent="onSubmit" class="d-flex">
@@ -32,6 +35,7 @@
 
   export default {
     setup() {
+      const toggle = ref(false);
       const todo = ref("");
       const todos = ref([]);
 
@@ -43,7 +47,13 @@
         todo.value = "";
       };
 
+      const onToggle = () => {
+        toggle.value = !toggle.value;
+      };
+
       return {
+        toggle,
+        onToggle,
         todo,
         todos,
         onSubmit,
