@@ -1,9 +1,21 @@
 <template>
-  <div>{{ obj }}</div>
-  <div class="name">{{ refName }}</div>
-  <!-- 양방향 바인딩??? -->
-  <input v-bind:type="refType" v-bind:value="refName" v-model="refName" />
-  <button class="btn btn-primary" v-on:click="initName()">초기화</button>
+  <div class="container">
+    <h2>TO-DO LIST</h2>
+    <form @submit.prevent="onSubmit" class="d-flex">
+      <div class="flex-grow-1 mx-2">
+        <input
+          class="form-control"
+          type="text"
+          v-model="name"
+          placeholder="Type new to-do"
+        />
+      </div>
+      <div class="ml-2">
+        <button class="btn btn-primary" type="submit">ADD</button>
+      </div>
+    </form>
+    {{ todos }}
+  </div>
 </template>
 
 <script>
@@ -11,39 +23,23 @@
   // composition API:
   Composition API is a set of APIs that allows us to author Vue components using imported functions instead of declaring options. 
   */
-  import {ref, reactive} from "vue";
+  import {ref} from "vue";
 
   export default {
     setup() {
-      const obj = reactive({cnt: 1});
-      let name = "su";
-      let refName = ref("su"); // ref 의 값은 문자열, 숫자, 배열, 오브젝트 타입 모두 가능
-      let refType = ref("text"); // ref 의 값은 문자열, 숫자, 배열, 오브젝트 타입 모두 가능
-      const greeting = name => {
-        return `Hello! ${name}`;
+      const todo = ref("");
+      const todos = ref([]);
+
+      const onSubmit = () => {
+        todos.value.push({
+          id: Date.now(),
+        });
       };
 
-      function initName() {
-        updateName("이름없음");
-      }
-
-      function updateName(newName) {
-        name = newName; // 템플릿에 바로 반영되지는 않음
-        refName.value = newName; // 템플릿에 바로 반영됨( reactive )
-
-        obj.cnt++;
-        console.log(name);
-        console.log(refName);
-      }
-
       return {
-        name,
-        greeting,
-        initName,
-        updateName,
-        refName,
-        refType,
-        obj,
+        todo,
+        todos,
+        onSubmit,
       };
     },
   };
