@@ -14,14 +14,10 @@
         <button class="btn btn-primary" type="submit">ADD</button>
       </div>
     </form>
-    <div class="card">
+
+    <div class="card" v-for="todo in todos" :key="todo.id">
       <div class="card-body p-2">
-        {{ todos[0] }}
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-body p-2">
-        {{ todos[1] }}
+        {{ todo.subject }}
       </div>
     </div>
   </div>
@@ -40,6 +36,7 @@
       const todos = ref([]);
 
       const onSubmit = () => {
+        console.log(todos);
         todos.value.push({
           id: Date.now(),
           subject: todo.value,
