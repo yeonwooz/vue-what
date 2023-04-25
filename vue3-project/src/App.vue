@@ -2,7 +2,7 @@
   <div class="container">
     <h2>TO-DO LIST</h2>
     <form @submit.prevent="onSubmit" class="d-flex">
-      <div class="flex-grow-1 mx-2">
+      <div class="flex-grow-1">
         <input
           class="form-control"
           type="text"
@@ -10,12 +10,12 @@
           placeholder="Type new to-do"
         />
       </div>
-      <div class="ml-2">
+      <div class="mx-2">
         <button class="btn btn-primary" type="submit">ADD</button>
       </div>
     </form>
 
-    <div class="card" v-for="todo in todos" :key="todo.id">
+    <div class="card my-2" v-for="todo in todos" :key="todo.id">
       <div class="card-body p-2">
         {{ todo.subject }}
       </div>
