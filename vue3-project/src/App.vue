@@ -14,7 +14,16 @@
         <button class="btn btn-primary" type="submit">ADD</button>
       </div>
     </form>
-    {{ todos }}
+    <div class="card">
+      <div class="card-body p-2">
+        {{ todos[0] }}
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body p-2">
+        {{ todos[1] }}
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,11 +40,11 @@
       const todos = ref([]);
 
       const onSubmit = () => {
-        todo.value = "";
         todos.value.push({
           id: Date.now(),
           subject: todo.value,
         });
+        todo.value = "";
       };
 
       return {
