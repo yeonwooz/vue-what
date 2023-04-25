@@ -36,7 +36,6 @@
       const todos = ref([]);
 
       const onSubmit = () => {
-        console.log(todos);
         todos.value.push({
           id: Date.now(),
           subject: todo.value,
