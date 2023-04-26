@@ -25,9 +25,9 @@
   import {ref} from "vue";
 
   export default {
-    setup() {
+    setup(props, context) {
       const todo = ref("");
-      const todos = ref([]);
+
       const hasError = ref(false);
       const todoStyle = {
         textDecoration: "line-through",
@@ -36,11 +36,16 @@
 
       const onSubmit = () => {
         if (todo.value) {
-          todos.value.push({
+          context.emit("add-todo", {
             id: Date.now(),
             subject: todo.value,
             completed: false,
           });
+          //   todos.value.push({
+          //     id: Date.now(),
+          //     subject: todo.value,
+          //     completed: false,
+          //   });
           todo.value = "";
           hasError.value = false;
         } else {
@@ -48,19 +53,18 @@
         }
       };
 
-      const deleteTodo = id => {
-        console.log("before", todos);
-        todos.value = todos.value.filter(item => item.id !== id);
-        console.log("after", todos);
-      };
+    //   const deleteTodo = id => {
+    //     console.log("before", todos);
+    //     todos.value = todos.value.filter(item => item.id !== id);
+    //     console.log("after", todos);
+    //   };
 
       return {
         hasError,
         todo,
-        todos,
         onSubmit,
         todoStyle,
-        deleteTodo,
+        // deleteTodo,
       };
     },
   };
