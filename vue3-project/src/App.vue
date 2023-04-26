@@ -10,6 +10,7 @@
     <hr />
     <TodoSimpleFormVue @add-todo="addTodo" />
     <TodoList
+      :todos="todos"
       :filteredTodos="filteredTodos"
       @toggle-todo="toggleTodo"
       @delete-todo="deleteTodo"
