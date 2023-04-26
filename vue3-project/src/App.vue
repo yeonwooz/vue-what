@@ -24,14 +24,12 @@
     setup() {
       const todos = ref([]);
       const addTodo = todo => {
-        console.log(todo);
         todos.value.push(todo);
       };
 
       const toggleTodo = id => {
         const item = todos.value.find(todo => todo.id === id);
         todos.value.find(todo => todo.id === id).completed = !item.completed;
-        console.log(item);
       };
 
       const deleteTodo = id => {
