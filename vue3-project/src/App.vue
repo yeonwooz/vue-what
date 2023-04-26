@@ -9,6 +9,7 @@
     />
     <hr />
     <TodoSimpleFormVue @add-todo="addTodo" />
+    <div style="color: red">{{ serverError }}</div>
     <TodoList
       :todos="todos"
       :filteredTodos="filteredTodos"
@@ -33,11 +34,18 @@
 
     setup() {
       const todos = ref([]);
+      const serverError = ref("");
       const getTodos = () => {
-        axios.get(SERVER_URL).then(res => {
-          // console.log(res);
-          todos.value = res.data;
-        });
+        axios
+          .get(SERVER_URL)
+          .then(res => {
+            // console.log(res);
+            todos.value = res.data;
+            serverError.value = "";
+          })
+          .catch(() => {
+            serverError.value = "서버 에러";
+          });
       };
       getTodos();
 
@@ -45,9 +53,12 @@
         axios
           .post(SERVER_URL, todo)
           .then(() => {
+            serverError.value = "";
             todos.value.push(todo);
           })
-          .catch(() => {});
+          .catch(() => {
+            serverError.value = "서버 에러";
+          });
       };
 
       const toggleTodo = id => {
@@ -78,6 +89,7 @@
         deleteTodo,
         searchText,
         filteredTodos,
+        serverError,
       };
     },
   };
