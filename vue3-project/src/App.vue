@@ -2,7 +2,11 @@
   <div class="container">
     <h2>할일</h2>
     <TodoSimpleFormVue @add-todo="addTodo" />
-    <TodoList :todos="todos" @toggle-todo="toggleTodo" />
+    <TodoList
+      :todos="todos"
+      @toggle-todo="toggleTodo"
+      @delete-todo="deleteTodo"
+    />
   </div>
 </template>
 
@@ -30,10 +34,15 @@
         console.log(item);
       };
 
+      const deleteTodo = id => {
+        todos.value = todos.value.filter(item => item.id !== id);
+      };
+
       return {
         addTodo,
         toggleTodo,
         todos,
+        deleteTodo,
       };
     },
   };

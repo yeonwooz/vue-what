@@ -21,7 +21,7 @@
   /*
     // composition API:
     Composition API is a set of APIs that allows us to author Vue components using imported functions instead of declaring options.
-    */
+   */
   import {ref} from "vue";
 
   export default {

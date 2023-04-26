@@ -28,7 +28,7 @@
   /*
       // composition API:
       Composition API is a set of APIs that allows us to author Vue components using imported functions instead of declaring options.
-      */
+  */
   import {ref} from "vue";
 
   export default {
@@ -49,17 +49,19 @@
         // * 자식이 부모의 props를 바꾸는 것은 안티패턴
         context.emit("toggle-todo", id);
       };
-      //   const deleteTodo = id => {
-      //     console.log("before", todos);
-      //     todos.value = todos.value.filter(item => item.id !== id);
-      //     console.log("after", todos);
-      //   };
+
+      const deleteTodo = id => {
+        context.emit("delete-todo", id);
+        // console.log("before", todos);
+        // todos.value = todos.value.filter(item => item.id !== id);
+        // console.log("after", todos);
+      };
 
       return {
         hasError,
         todoStyle,
         toggleTodo,
-        // deleteTodo,
+        deleteTodo,
       };
     },
   };
