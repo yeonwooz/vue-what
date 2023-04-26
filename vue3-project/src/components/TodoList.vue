@@ -1,21 +1,24 @@
 <template>
-  <div class="p-2" v-if="!todos.length">아직 할일이 없습니다</div>
-  <div class="card my-2" v-for="todo in todos" :key="todo.id">
-    <div class="card-body p-2 d-flex align-items-center">
-      <div class="form-check flex-grow-1">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          v-model="todo.completed"
-        />
-        <label class="form-check-label" :class="{todo: todo.completed}">{{
-          todo.subject
-        }}</label>
-      </div>
-      <div>
-        <button class="btn btn-danger" @click="deleteTodo(todo.id)">
-          삭제
-        </button>
+  <div>
+    <div class="p-2" v-if="!todos.length">아직 할일이 없습니다</div>
+    <div class="card my-2" v-for="todo in todos" :key="todo.id">
+      <div class="card-body p-2 d-flex align-items-center">
+        <div class="form-check flex-grow-1">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            :value="todo.completed"
+            @change="toggleTodo(todo.id)"
+          />
+          <label class="form-check-label" :class="{todo: todo.completed}">{{
+            todo.subject
+          }}</label>
+        </div>
+        <div>
+          <button class="btn btn-danger" @click="deleteTodo(todo.id)">
+            삭제
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -29,14 +32,23 @@
   import {ref} from "vue";
 
   export default {
-    props: ["todos"],
-    setup() {
+    props: {
+      todos: {
+        type: Array,
+        required: true,
+      },
+    },
+    setup(props, context) {
       const hasError = ref(false);
       const todoStyle = {
         textDecoration: "line-through",
         color: "gray",
       };
 
+      const toggleTodo = id => {
+        // * 자식이 부모의 props를 바꾸는 것은 안티패턴
+        context.emit("toggle-todo", id);
+      };
       //   const deleteTodo = id => {
       //     console.log("before", todos);
       //     todos.value = todos.value.filter(item => item.id !== id);
@@ -46,6 +58,7 @@
       return {
         hasError,
         todoStyle,
+        toggleTodo,
         // deleteTodo,
       };
     },
