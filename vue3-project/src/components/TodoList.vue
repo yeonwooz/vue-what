@@ -1,6 +1,6 @@
 <template>
-  <div class="p-2" v-if="!todos.length">아직 할일이 없습니다</div>
-  <div class="card my-2" v-for="todo in todos" :key="todo.id">
+  <div class="p-2" v-if="!filteredTodos.length">아직 할일이 없습니다</div>
+  <div class="card my-2" v-for="todo in filteredTodos" :key="todo.id">
     <div class="card-body p-2 d-flex align-items-center">
       <div class="form-check flex-grow-1">
         <input
@@ -31,7 +31,7 @@
 
   export default {
     props: {
-      todos: {
+      filteredTodos: {
         type: Array,
         required: true,
       },
