@@ -22,49 +22,31 @@
 </template>
 
 <script>
-    /*
+  /*
       // composition API:
       Composition API is a set of APIs that allows us to author Vue components using imported functions instead of declaring options.
       */
   import {ref} from "vue";
 
   export default {
+    props: ["todos"],
     setup() {
-      const todo = ref("");
-      const todos = ref([]);
       const hasError = ref(false);
       const todoStyle = {
         textDecoration: "line-through",
         color: "gray",
       };
 
-      const onSubmit = () => {
-        if (todo.value) {
-          todos.value.push({
-            id: Date.now(),
-            subject: todo.value,
-            completed: false,
-          });
-          todo.value = "";
-          hasError.value = false;
-        } else {
-          hasError.value = true;
-        }
-      };
-
-      const deleteTodo = id => {
-        console.log("before", todos);
-        todos.value = todos.value.filter(item => item.id !== id);
-        console.log("after", todos);
-      };
+      //   const deleteTodo = id => {
+      //     console.log("before", todos);
+      //     todos.value = todos.value.filter(item => item.id !== id);
+      //     console.log("after", todos);
+      //   };
 
       return {
         hasError,
-        todo,
-        todos,
-        onSubmit,
         todoStyle,
-        deleteTodo,
+        // deleteTodo,
       };
     },
   };

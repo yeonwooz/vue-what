@@ -53,18 +53,11 @@
         }
       };
 
-    //   const deleteTodo = id => {
-    //     console.log("before", todos);
-    //     todos.value = todos.value.filter(item => item.id !== id);
-    //     console.log("after", todos);
-    //   };
-
       return {
         hasError,
         todo,
         onSubmit,
         todoStyle,
-        // deleteTodo,
       };
     },
   };

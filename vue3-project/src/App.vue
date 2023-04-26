@@ -2,7 +2,7 @@
   <div class="container">
     <h2>할일</h2>
     <TodoSimpleFormVue @add-todo="addTodo" />
-    <TodoListVue />
+    <TodoListVue :todos="todos" />
   </div>
 </template>
 
