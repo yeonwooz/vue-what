@@ -38,7 +38,7 @@
       const onSubmit = () => {
         if (todo.value) {
           emit("add-todo", {
-            id: Date.now(),
+            // id: Date.now(),
             subject: todo.value,
             completed: false,
           });

@@ -19,8 +19,10 @@
 </template>
 
 <script>
+  import axios from "axios";
   import TodoList from "./components/TodoList.vue";
   import TodoSimpleFormVue from "./components/TodoSimpleForm.vue";
+  const SERVER_URL = "http://localhost:3000/todos";
   import {ref, computed} from "vue";
 
   export default {
@@ -31,8 +33,21 @@
 
     setup() {
       const todos = ref([]);
+      const getTodos = () => {
+        axios.get(SERVER_URL).then(res => {
+          // console.log(res);
+          todos.value = res.data;
+        });
+      };
+      getTodos();
+
       const addTodo = todo => {
-        todos.value.push(todo);
+        axios
+          .post(SERVER_URL, todo)
+          .then(() => {
+            todos.value.push(todo);
+          })
+          .catch(() => {});
       };
 
       const toggleTodo = id => {
@@ -40,8 +55,10 @@
         todos.value.find(todo => todo.id === id).completed = !item.completed;
       };
 
-      const deleteTodo = id => {
-        todos.value = todos.value.filter(item => item.id !== id);
+      const deleteTodo = async id => {
+        // todos.value = todos.value.filter(item => item.id !== id);
+        await axios.delete(`${SERVER_URL}/${id}`);
+        getTodos();
       };
 
       const searchText = ref("");
