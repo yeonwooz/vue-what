@@ -20,7 +20,14 @@
 
     <div class="card my-2" v-for="todo in todos" :key="todo.id">
       <div class="card-body p-2">
-        {{ todo.subject }}
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            v-model="todo.completed"
+          />
+          <label class="form-check-label">{{ todo.subject }}</label>
+        </div>
       </div>
     </div>
   </div>
@@ -44,6 +51,7 @@
           todos.value.push({
             id: Date.now(),
             subject: todo.value,
+            completed: false,
           });
           todo.value = "";
           hasError.value = false;
