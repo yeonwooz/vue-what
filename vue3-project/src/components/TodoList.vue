@@ -1,24 +1,22 @@
 <template>
-  <div>
-    <div class="p-2" v-if="!todos.length">아직 할일이 없습니다</div>
-    <div class="card my-2" v-for="todo in todos" :key="todo.id">
-      <div class="card-body p-2 d-flex align-items-center">
-        <div class="form-check flex-grow-1">
-          <input
-            class="form-check-input"
-            type="checkbox"
-            :value="todo.completed"
-            @change="toggleTodo(todo.id)"
-          />
-          <label class="form-check-label" :class="{todo: todo.completed}">{{
-            todo.subject
-          }}</label>
-        </div>
-        <div>
-          <button class="btn btn-danger" @click="deleteTodo(todo.id)">
-            삭제
-          </button>
-        </div>
+  <div class="p-2" v-if="!todos.length">아직 할일이 없습니다</div>
+  <div class="card my-2" v-for="todo in todos" :key="todo.id">
+    <div class="card-body p-2 d-flex align-items-center">
+      <div class="form-check flex-grow-1">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          :value="todo.completed"
+          @change="toggleTodo(todo.id)"
+        />
+        <label class="form-check-label" :class="{todo: todo.completed}">{{
+          todo.subject
+        }}</label>
+      </div>
+      <div>
+        <button class="btn btn-danger" @click="deleteTodo(todo.id)">
+          삭제
+        </button>
       </div>
     </div>
   </div>
@@ -38,6 +36,7 @@
         required: true,
       },
     },
+    emits: ["toggle-todo", "delete-todo"],
     setup(props, context) {
       const hasError = ref(false);
       const todoStyle = {
