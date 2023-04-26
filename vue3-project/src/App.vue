@@ -26,11 +26,9 @@
             type="checkbox"
             v-model="todo.completed"
           />
-          <label
-            class="form-check-label"
-            :style="todo.completed && todoStyle"
-            >{{ todo.subject }}</label
-          >
+          <label class="form-check-label" :class="{todo: todo.completed}">{{
+            todo.subject
+          }}</label>
         </div>
       </div>
     </div>
@@ -80,7 +78,8 @@
 </script>
 
 <style scoped>
-  .name {
-    color: rgb(84, 141, 255);
+  .todo {
+    color: rgb(154, 154, 154);
+    text-decoration: line-through;
   }
 </style>
