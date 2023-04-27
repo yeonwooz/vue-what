@@ -75,7 +75,6 @@
 
       const getTodos = async (page = currentPage.value) => {
         const pageQuery = `?_page=${page}&_limit=${limit}`;
-        console.log(pageQuery);
         try {
           const res = await axios.get(`${SERVER_URL}${pageQuery}`);
           todoCount.value = res.headers["x-total-count"];
@@ -101,7 +100,6 @@
       const toggleTodo = async id => {
         try {
           const item = todos.value.find(todo => todo.id === id);
-          console.log(item.completed);
           // todos.value.find(todo => todo.id === id).completed = !item.completed;
           const res = await axios.patch(`${SERVER_URL}/${id}`, {
             completed: !item.completed,
@@ -122,14 +120,22 @@
         }
       };
 
+      const prevSearchText = ref("");
       const searchText = ref("");
       const filteredTodos = () => {
         if (searchText.value) {
+          prevSearchText.value = searchText;
           axios.get(`${SERVER_URL}`).then(res => {
             todos.value = res.data.filter(todo => {
               return todo.subject.includes(searchText.value);
             });
+            todoCount.value = todos.value.length;
           });
+        }
+
+        if (prevSearchText.value && !searchText.value) {
+          getTodos();
+          prevSearchText.value = "";
         }
         return todos.value;
       };
