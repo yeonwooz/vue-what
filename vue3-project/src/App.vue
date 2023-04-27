@@ -16,6 +16,35 @@
       @toggle-todo="toggleTodo"
       @delete-todo="deleteTodo"
     />
+    <ul class="pagination">
+      <li class="page-item" v-if="currentPage !== 1">
+        <a
+          class="page-link"
+          :class="currentPage === page && 'active'"
+          style="cursor: pointer"
+          @click="getTodos(currentPage - 1)"
+          >이전</a
+        >
+      </li>
+      <li class="page-item" v-for="page in pageCount" :key="page">
+        <a
+          class="page-link"
+          :class="currentPage === page && 'active'"
+          style="cursor: pointer"
+          @click="getTodos(page)"
+          >{{ page }}</a
+        >
+      </li>
+      <li class="page-item" v-if="currentPage < pageCount">
+        <a
+          class="page-link"
+          :class="currentPage === page && 'active'"
+          style="cursor: pointer"
+          @click="getTodos(currentPage + 1)"
+          >다음</a
+        >
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -35,10 +64,21 @@
     setup() {
       const todos = ref([]);
       const serverError = ref("");
-      const getTodos = async () => {
+      const todoCount = ref(0);
+      const currentPage = ref(1);
+      const limit = 5;
+      const pageCount = computed(() => {
+        return Math.ceil(todoCount.value / limit);
+      });
+
+      const getTodos = async (page = currentPage.value) => {
+        const pageQuery = `?_page=${page}&_limit=${limit}`;
+        console.log(pageQuery);
         try {
-          const res = await axios.get(SERVER_URL);
+          const res = await axios.get(`${SERVER_URL}${pageQuery}`);
+          todoCount.value = res.headers["x-total-count"];
           todos.value = res.data;
+          currentPage.value = page;
           serverError.value = "";
         } catch (error) {
           serverError.value = "서버 에러";
@@ -94,10 +134,13 @@
         addTodo,
         toggleTodo,
         todos,
+        getTodos,
         deleteTodo,
         searchText,
         filteredTodos,
         serverError,
+        currentPage,
+        pageCount,
       };
     },
   };
