@@ -74,9 +74,12 @@
       const searchText = ref("");
 
       const getTodos = async (page = currentPage.value) => {
-        const query = searchText.value
-          ? `?subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
-          : `?_page=${page}&_limit=${limit}`;
+        let query = `_page=${page}&_limit=${limit}&_sort=id&_order=desc`;
+        if (searchText.value) {
+          query = `?subject_like=${searchText.value}&` + query;
+        } else {
+          query = "?" + query;
+        }
 
         try {
           const res = await axios.get(`${SERVER_URL}${query}`);
