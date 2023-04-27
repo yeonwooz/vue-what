@@ -6,6 +6,7 @@
       type="text"
       v-model="searchText"
       placeholder="찾을 내용"
+      @keyup.enter="searchTodo"
     />
     <hr />
     <TodoSimpleFormVue @add-todo="addTodo" />
@@ -124,9 +125,16 @@
         }
       };
 
-      // const prevSearchText = ref("");
+      let throttle = null;
+
+      const searchTodo = () => {
+        clearTimeout(throttle);
+        throttle = setTimeout(() => {
+          getTodos(1);
+        }, 1000);
+      };
       watch(searchText, () => {
-        getTodos(1);
+        searchTodo();
       });
 
       return {
@@ -139,6 +147,7 @@
         serverError,
         currentPage,
         pageCount,
+        searchTodo,
       };
     },
   };
