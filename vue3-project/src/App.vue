@@ -12,7 +12,6 @@
     <div style="color: red">{{ serverError }}</div>
     <TodoList
       :todos="todos"
-      :filteredTodos="filteredTodos()"
       @toggle-todo="toggleTodo"
       @delete-todo="deleteTodo"
     />
@@ -55,7 +54,7 @@
   import TodoList from "./components/TodoList.vue";
   import TodoSimpleFormVue from "./components/TodoSimpleForm.vue";
   const SERVER_URL = "http://localhost:3000/todos";
-  import {ref, computed} from "vue";
+  import {ref, computed, watch} from "vue";
 
   export default {
     components: {
@@ -72,11 +71,16 @@
       const pageCount = computed(() => {
         return Math.ceil(todoCount.value / limit);
       });
+      const searchText = ref("");
 
       const getTodos = async (page = currentPage.value) => {
-        const pageQuery = `?_page=${page}&_limit=${limit}`;
+        const query = searchText.value
+          ? `?subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
+          : `?_page=${page}&_limit=${limit}`;
+
+        console.log(query);
         try {
-          const res = await axios.get(`${SERVER_URL}${pageQuery}`);
+          const res = await axios.get(`${SERVER_URL}${query}`);
           todoCount.value = res.headers["x-total-count"];
           todos.value = res.data;
           currentPage.value = page;
@@ -120,26 +124,10 @@
         }
       };
 
-      const prevSearchText = ref("");
-      const searchText = ref("");
-      const filteredTodos = () => {
-        if (searchText.value && prevSearchText.value !== searchText.value) {
-          prevSearchText.value = searchText;
-          axios.get(`${SERVER_URL}`).then(res => {
-            todos.value = res.data.filter(todo => {
-              return todo.subject.includes(searchText.value);
-            });
-            todoCount.value = todos.value.length;
-            prevSearchText.value = searchText.value;
-          });
-        }
-
-        if (prevSearchText.value && !searchText.value) {
-          getTodos();
-          prevSearchText.value = "";
-        }
-        return todos.value;
-      };
+      // const prevSearchText = ref("");
+      watch(searchText, () => {
+        getTodos(1);
+      });
 
       return {
         addTodo,
@@ -148,7 +136,6 @@
         getTodos,
         deleteTodo,
         searchText,
-        filteredTodos,
         serverError,
         currentPage,
         pageCount,
