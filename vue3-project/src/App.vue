@@ -76,13 +76,11 @@
       const getTodos = async (page = currentPage.value) => {
         let query = `_page=${page}&_limit=${limit}&_sort=id&_order=desc`;
         if (searchText.value) {
-          query = `?subject_like=${searchText.value}&` + query;
-        } else {
-          query = "?" + query;
+          query = `subject_like=${searchText.value}&` + query;
         }
 
         try {
-          const res = await axios.get(`${SERVER_URL}${query}`);
+          const res = await axios.get(`${SERVER_URL}?${query}`);
           todoCount.value = res.headers["x-total-count"];
           todos.value = res.data;
           currentPage.value = page;
