@@ -12,7 +12,7 @@
     <div style="color: red">{{ serverError }}</div>
     <TodoList
       :todos="todos"
-      :filteredTodos="filteredTodos"
+      :filteredTodos="filteredTodos()"
       @toggle-todo="toggleTodo"
       @delete-todo="deleteTodo"
     />
@@ -123,14 +123,16 @@
       };
 
       const searchText = ref("");
-      const filteredTodos = computed(() => {
+      const filteredTodos = () => {
         if (searchText.value) {
-          return todos.value.filter(todo => {
-            return todo.subject.includes(searchText.value);
+          axios.get(`${SERVER_URL}`).then(res => {
+            todos.value = res.data.filter(todo => {
+              return todo.subject.includes(searchText.value);
+            });
           });
         }
         return todos.value;
-      });
+      };
 
       return {
         addTodo,
