@@ -123,13 +123,14 @@
       const prevSearchText = ref("");
       const searchText = ref("");
       const filteredTodos = () => {
-        if (searchText.value) {
+        if (searchText.value && prevSearchText.value !== searchText.value) {
           prevSearchText.value = searchText;
           axios.get(`${SERVER_URL}`).then(res => {
             todos.value = res.data.filter(todo => {
               return todo.subject.includes(searchText.value);
             });
             todoCount.value = todos.value.length;
+            prevSearchText.value = searchText.value;
           });
         }
 
