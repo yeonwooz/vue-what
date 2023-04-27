@@ -56,9 +56,18 @@
         }
       };
 
-      const toggleTodo = id => {
-        const item = todos.value.find(todo => todo.id === id);
-        todos.value.find(todo => todo.id === id).completed = !item.completed;
+      const toggleTodo = async id => {
+        try {
+          const item = todos.value.find(todo => todo.id === id);
+          console.log(item.completed);
+          // todos.value.find(todo => todo.id === id).completed = !item.completed;
+          const res = await axios.patch(`${SERVER_URL}/${id}`, {
+            completed: !item.completed,
+          });
+          item.completed = res.data.completed;
+        } catch (error) {
+          serverError.value = "서버 에러";
+        }
       };
 
       const deleteTodo = async id => {
