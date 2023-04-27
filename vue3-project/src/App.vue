@@ -35,30 +35,25 @@
     setup() {
       const todos = ref([]);
       const serverError = ref("");
-      const getTodos = () => {
-        axios
-          .get(SERVER_URL)
-          .then(res => {
-            // console.log(res);
-            todos.value = res.data;
-            serverError.value = "";
-          })
-          .catch(() => {
-            serverError.value = "서버 에러";
-          });
+      const getTodos = async () => {
+        try {
+          const res = await axios.get(SERVER_URL);
+          todos.value = res.data;
+          serverError.value = "";
+        } catch (error) {
+          serverError.value = "서버 에러";
+        }
       };
+
       getTodos();
 
-      const addTodo = todo => {
-        axios
-          .post(SERVER_URL, todo)
-          .then(() => {
-            serverError.value = "";
-            todos.value.push(todo);
-          })
-          .catch(() => {
-            serverError.value = "서버 에러";
-          });
+      const addTodo = async todo => {
+        try {
+          await axios.post(SERVER_URL, todo);
+          getTodos();
+        } catch (error) {
+          serverError.value = "서버 에러";
+        }
       };
 
       const toggleTodo = id => {
@@ -67,9 +62,13 @@
       };
 
       const deleteTodo = async id => {
-        // todos.value = todos.value.filter(item => item.id !== id);
-        await axios.delete(`${SERVER_URL}/${id}`);
-        getTodos();
+        try {
+          // todos.value = todos.value.filter(item => item.id !== id);
+          await axios.delete(`${SERVER_URL}/${id}`);
+          getTodos();
+        } catch (error) {
+          serverError.value = "서버 에러";
+        }
       };
 
       const searchText = ref("");
