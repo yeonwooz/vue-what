@@ -78,7 +78,6 @@
           ? `?subject_like=${searchText.value}&_page=${page}&_limit=${limit}`
           : `?_page=${page}&_limit=${limit}`;
 
-        console.log(query);
         try {
           const res = await axios.get(`${SERVER_URL}${query}`);
           todoCount.value = res.headers["x-total-count"];
