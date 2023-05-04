@@ -1,10 +1,10 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand px-2" href="/"> SEAN's TODO </a>
+    <router-link class="navbar-brand px-2" to="/"> SEAN's TODO </router-link>
 
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="/todos">Todos</a>
+        <router-link class="nav-link" to="/todos">Todos</router-link>
       </li>
     </ul>
   </nav>
