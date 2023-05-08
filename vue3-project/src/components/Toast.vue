@@ -1,5 +1,7 @@
 <template>
-  <div class="alert alert-success toast-box" role="alert">{{ message }}</div>
+  <div class="alert toast-box" :class="`alert-${type}`" role="alert">
+    {{ message }}
+  </div>
 </template>
 
 <script>
@@ -8,6 +10,10 @@
       message: {
         type: String,
         required: true,
+      },
+      type: {
+        type: String,
+        default: "success",
       },
     },
   };

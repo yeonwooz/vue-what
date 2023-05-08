@@ -38,7 +38,7 @@
       </button>
     </div>
   </form>
-  <Toast v-if="showToast" :message="toastMessage" />
+  <Toast v-if="showToast" :message="toastMessage" :type="toastType" />
 </template>
 
 <script>
@@ -62,12 +62,17 @@
       const todoId = route.params.id;
       const showToast = ref(false);
       const toastMessage = ref("");
+      const toastType = ref("");
 
       const getTodo = async () => {
-        const res = await axios.get(`${SERVER_URL}/${todoId}`);
-        originalTodo.value = {...res.data};
-        todo.value = {...res.data};
-        loading.value = false;
+        try {
+          const res = await axios.get(`${SERVER_URL}/${todoId}`);
+          originalTodo.value = {...res.data};
+          todo.value = {...res.data};
+          loading.value = false;
+        } catch (error) {
+          triggerToast("에러 발생", "danger");
+        }
       };
       getTodo();
 
@@ -87,17 +92,27 @@
 
       const onSave = async () => {
         if (!todoUpdated.value) return;
-        console.log("change");
-        await axios.put(`${SERVER_URL}/${todoId}`, {
-          subject: todo.value.subject,
-          completed: todo.value.completed,
-        });
-        triggerToast("저장 완료");
+        try {
+          console.log("change");
+          await axios.put(`${SERVER_URL}/${todoId}`, {
+            subject: todo.value.subject,
+            completed: todo.value.completed,
+          });
+          triggerToast("저장 완료");
+        } catch (error) {
+          triggerToast("에러 발생", "danger");
+        }
       };
 
-      const triggerToast = msg => {
+      const triggerToast = (msg, type = "success") => {
         showToast.value = true;
         toastMessage.value = msg;
+        toastType.value = type;
+        setTimeout(() => {
+          showToast.value = false;
+          toastMessage.value = "";
+          toastType.value = "";
+        }, 3000);
       };
 
       return {
@@ -110,6 +125,7 @@
         showToast,
         triggerToast,
         toastMessage,
+        toastType,
       };
     },
   };
