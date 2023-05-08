@@ -38,6 +38,7 @@
       </button>
     </div>
   </form>
+  <Toast v-if="showToast" :message="toastMessage" />
 </template>
 
 <script>
@@ -45,8 +46,12 @@
   import {useRoute, useRouter} from "vue-router";
   import {ref, computed} from "vue";
   import _ from "lodash";
+  import Toast from "@/components/Toast.vue"; // @ = src
 
   export default {
+    components: {
+      Toast,
+    },
     setup() {
       const route = useRoute();
       const router = useRouter();
@@ -55,6 +60,8 @@
       const loading = ref(true);
       const SERVER_URL = "http://localhost:3000/todos";
       const todoId = route.params.id;
+      const showToast = ref(false);
+      const toastMessage = ref("");
 
       const getTodo = async () => {
         const res = await axios.get(`${SERVER_URL}/${todoId}`);
@@ -85,8 +92,25 @@
           subject: todo.value.subject,
           completed: todo.value.completed,
         });
+        triggerToast("저장 완료");
       };
-      return {todo, toggleStatus, moveToList, onSave, loading, todoUpdated};
+
+      const triggerToast = msg => {
+        showToast.value = true;
+        toastMessage.value = msg;
+      };
+
+      return {
+        todo,
+        toggleStatus,
+        moveToList,
+        onSave,
+        loading,
+        todoUpdated,
+        showToast,
+        triggerToast,
+        toastMessage,
+      };
     },
   };
 </script>
