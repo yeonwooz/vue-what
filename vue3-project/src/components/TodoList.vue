@@ -16,9 +16,12 @@
           @change="toggleTodo(todo.id, $event)"
           @click.stop
         />
-        <label class="form-check-label" :class="{todo: todo.completed}">{{
-          todo.subject
-        }}</label>
+        <label
+          class="form-check-label"
+          :class="{todo: todo.completed}"
+          style="cursor: pointer"
+          >{{ todo.subject }}</label
+        >
       </div>
       <div>
         <button class="btn btn-danger" @click.stop="deleteTodo(todo.id)">
