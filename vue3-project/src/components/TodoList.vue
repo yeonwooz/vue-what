@@ -13,14 +13,14 @@
           class="form-check-input"
           type="checkbox"
           :value="todo.completed"
-          @change="toggleTodo(todo.id)"
+          @click.stop="toggleTodo(todo.id)"
         />
         <label class="form-check-label" :class="{todo: todo.completed}">{{
           todo.subject
         }}</label>
       </div>
       <div>
-        <button class="btn btn-danger" @click="deleteTodo(todo.id)">
+        <button class="btn btn-danger" @click.stop="deleteTodo(todo.id)">
           삭제
         </button>
       </div>
