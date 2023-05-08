@@ -1,7 +1,7 @@
 <template>
   <h1>일정</h1>
   <div v-if="loading">...불러오는중</div>
-  <form v-else>
+  <form v-else @submit.prevent="onSave">
     <div class="row">
       <div class="col-6">
         <div class="form-group">
@@ -43,9 +43,10 @@
       const todo = ref(null);
       const loading = ref(true);
       const SERVER_URL = "http://localhost:3000/todos";
+      const todoId = route.params.id;
 
       const getTodo = async () => {
-        const res = await axios.get(`${SERVER_URL}/${route.params.id}`);
+        const res = await axios.get(`${SERVER_URL}/${todoId}`);
         todo.value = res.data;
         loading.value = false;
       };
@@ -60,7 +61,14 @@
           name: "Todos",
         });
       };
-      return {todo, toggleStatus, moveToList, loading};
+
+      const onSave = async () => {
+        await axios.put(`${SERVER_URL}/${todoId}`, {
+          subject: todo.value.subject,
+          completed: todo.value.completed,
+        });
+      };
+      return {todo, toggleStatus, moveToList, onSave, loading};
     },
   };
 </script>
