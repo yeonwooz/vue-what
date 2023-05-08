@@ -1,6 +1,7 @@
 <template>
   <h1>일정</h1>
-  <form>
+  <div v-if="loading">...불러오는중</div>
+  <form v-else>
     <div class="form-group">
       <label>제목</label>
       <input v-model="todo.subject" type="text" class="form-control" />
@@ -17,14 +18,16 @@
     setup() {
       const route = useRoute();
       const todo = ref(null);
+      const loading = ref(true);
       const SERVER_URL = "http://localhost:3000/todos";
 
       const getTodo = async () => {
         const res = await axios.get(`${SERVER_URL}/${route.params.id}`);
         todo.value = res.data;
+        loading.value = false;
       };
       getTodo();
-      return {todo};
+      return {todo, loading};
     },
   };
 </script>
