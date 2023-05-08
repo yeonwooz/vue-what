@@ -13,7 +13,8 @@
           class="form-check-input"
           type="checkbox"
           :value="todo.completed"
-          @click.stop="toggleTodo(todo.id)"
+          @change="toggleTodo(todo.id, $event)"
+          @click.stop
         />
         <label class="form-check-label" :class="{todo: todo.completed}">{{
           todo.subject
@@ -55,9 +56,9 @@
         color: "gray",
       };
 
-      const toggleTodo = id => {
+      const toggleTodo = (id, event) => {
         // * 자식이 부모의 props를 바꾸는 것은 안티패턴
-        context.emit("toggle-todo", id);
+        context.emit("toggle-todo", id, event.target.checked);
       };
 
       const deleteTodo = id => {

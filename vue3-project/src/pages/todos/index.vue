@@ -104,14 +104,14 @@
         }
       };
 
-      const toggleTodo = async id => {
+      const toggleTodo = async (id, checked) => {
         try {
           const item = todos.value.find(todo => todo.id === id);
           // todos.value.find(todo => todo.id === id).completed = !item.completed;
-          const res = await axios.patch(`${SERVER_URL}/${id}`, {
-            completed: !item.completed,
+          await axios.patch(`${SERVER_URL}/${id}`, {
+            completed: checked,
           });
-          item.completed = res.data.completed;
+          item.completed = checked;
         } catch (error) {
           serverError.value = "서버 에러";
         }
