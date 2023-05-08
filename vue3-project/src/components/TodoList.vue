@@ -66,7 +66,13 @@
 
       const router = useRouter();
       const moveToTodoPage = id => {
-        router.push(`/todos/${id}`);
+        // router.push(`/todos/${id}`);
+        router.push({
+          name: "Todo",
+          params: {
+            id,
+          },
+        });
       };
 
       return {
