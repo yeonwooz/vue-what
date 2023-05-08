@@ -1,6 +1,12 @@
 <template>
   <div class="p-2" v-if="!todos.length">검색결과 없음</div>
-  <div class="card my-2" v-for="todo in todos" :key="todo.id">
+  <div
+    class="card my-2"
+    v-for="todo in todos"
+    :key="todo.id"
+    @click="moveToTodoPage(todo.id)"
+    style="cursor: pointer"
+  >
     <div class="card-body p-2 d-flex align-items-center">
       <div class="form-check flex-grow-1">
         <input
@@ -28,6 +34,7 @@
       Composition API is a set of APIs that allows us to author Vue components using imported functions instead of declaring options.
   */
   import {ref} from "vue";
+  import {useRouter} from "vue-router";
 
   export default {
     props: {
@@ -57,11 +64,17 @@
         context.emit("delete-todo", id);
       };
 
+      const router = useRouter();
+      const moveToTodoPage = id => {
+        router.push(`/todos/${id}`);
+      };
+
       return {
         hasError,
         todoStyle,
         toggleTodo,
         deleteTodo,
+        moveToTodoPage,
       };
     },
   };

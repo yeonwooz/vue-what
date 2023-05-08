@@ -3,7 +3,12 @@
 </template>
 
 <script>
-  export default {};
+  //   import {useRoute} from "vue-router";
+  export default {
+    setup() {
+      //   const route = useRoute();
+    },
+  };
 </script>
 
 <style></style>
