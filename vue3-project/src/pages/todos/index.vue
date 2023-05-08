@@ -1,6 +1,5 @@
 <template>
-  <router-view />
-  <div class="container">
+  <div>
     <h2>할일</h2>
     <input
       class="form-control"
