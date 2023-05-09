@@ -81,7 +81,8 @@
       onUnmounted(() => {
         console.log("unmounted");
       });
-      console.log("hello");
+
+      console.log("hello");  // setup 함수 상의 라이프사이클 함수들이 등록되는 시점에 실행됨. 이후 라이프사이클함수가 실행됨
       const route = useRoute();
       const router = useRouter();
       const todo = ref(null);
