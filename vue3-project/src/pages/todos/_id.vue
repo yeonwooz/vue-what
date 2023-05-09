@@ -39,12 +39,22 @@
     </div>
   </form>
   <Toast v-if="showToast" :message="toastMessage" :type="toastType" />
+  <div id="sean">coder</div>
 </template>
 
 <script>
   import axios from "axios";
   import {useRoute, useRouter} from "vue-router";
-  import {ref, computed} from "vue";
+  import {
+    ref,
+    computed,
+    onBeforeMount,
+    onMounted,
+    onBeforeUpdate,
+    onUpdated,
+    onBeforeUnmount,
+    onUnmounted,
+  } from "vue";
   import _ from "lodash";
   import Toast from "@/components/Toast.vue"; // @ = src
 
@@ -53,6 +63,25 @@
       Toast,
     },
     setup() {
+      onBeforeMount(() => {
+        console.log("onBeforeMount", document.querySelector("#sean"));
+      });
+      onMounted(() => {
+        console.log("onMounted", document.querySelector("#sean"));
+      });
+      onBeforeUpdate(() => {
+        console.log("before update");
+      });
+      onUpdated(() => {
+        console.log("updated");
+      });
+      onBeforeUnmount(() => {
+        console.log("before unmount");
+      });
+      onUnmounted(() => {
+        console.log("unmounted");
+      });
+      console.log("hello");
       const route = useRoute();
       const router = useRouter();
       const todo = ref(null);
