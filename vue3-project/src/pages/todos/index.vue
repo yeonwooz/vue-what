@@ -48,6 +48,7 @@
       </ul>
     </div>
   </div>
+  <Toast v-if="showToast" :message="toastMessage" :type="toastType" />
 </template>
 
 <script>
@@ -57,11 +58,13 @@
   import TodoSimpleFormVue from "@/components/TodoSimpleForm.vue";
   const SERVER_URL = "http://localhost:3000/todos";
   import {ref, computed, watch} from "vue";
+  import Toast from "@/components/Toast.vue";
 
   export default {
     components: {
       TodoSimpleFormVue,
       TodoList,
+      Toast,
     },
 
     setup() {
@@ -88,7 +91,7 @@
           currentPage.value = page;
           serverError.value = "";
         } catch (error) {
-          serverError.value = "서버 에러";
+          triggerToast("서버 에러", "danger");
         }
       };
 
@@ -99,7 +102,7 @@
           await axios.post(SERVER_URL, todo);
           getTodos();
         } catch (error) {
-          serverError.value = "서버 에러";
+          triggerToast("서버 에러", "danger");
         }
       };
 
@@ -112,7 +115,7 @@
           });
           item.completed = checked;
         } catch (error) {
-          serverError.value = "서버 에러";
+          triggerToast("서버 에러", "danger");
         }
       };
 
@@ -122,7 +125,7 @@
           await axios.delete(`${SERVER_URL}/${id}`);
           getTodos();
         } catch (error) {
-          serverError.value = "서버 에러";
+          triggerToast("서버 에러", "danger");
         }
       };
 
@@ -138,6 +141,22 @@
         searchTodo();
       });
 
+      const showToast = ref(false);
+      const toastMessage = ref("");
+      const toastType = ref("");
+      const timeout = ref(null);
+      const triggerToast = (msg, type = "success") => {
+        showToast.value = true;
+        toastMessage.value = msg;
+        toastType.value = type;
+        timeout.value = setTimeout(() => {
+          console.log("타임아웃");
+          showToast.value = false;
+          toastMessage.value = "";
+          toastType.value = "";
+        }, 3000);
+      };
+
       return {
         addTodo,
         toggleTodo,
@@ -149,6 +168,10 @@
         currentPage,
         pageCount,
         searchTodo,
+        showToast,
+        triggerToast,
+        toastMessage,
+        toastType,
       };
     },
   };
