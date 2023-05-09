@@ -58,7 +58,8 @@
   import TodoSimpleFormVue from "@/components/TodoSimpleForm.vue";
   const SERVER_URL = "http://localhost:3000/todos";
   import {ref, computed, watch} from "vue";
-  import Toast from "@/components/Toast.vue";
+  import Toast from "@/components/Toast.vue"; // @ = src
+  import {useToast} from "@/composables/toast";
 
   export default {
     components: {
@@ -77,6 +78,8 @@
         return Math.ceil(todoCount.value / limit);
       });
       const searchText = ref("");
+
+      const {showToast, triggerToast, toastMessage, toastType} = useToast();
 
       const getTodos = async (page = currentPage.value) => {
         let query = `_page=${page}&_limit=${limit}&_sort=id&_order=desc`;
@@ -140,22 +143,6 @@
       watch(searchText, () => {
         searchTodo();
       });
-
-      const showToast = ref(false);
-      const toastMessage = ref("");
-      const toastType = ref("");
-      const timeout = ref(null);
-      const triggerToast = (msg, type = "success") => {
-        showToast.value = true;
-        toastMessage.value = msg;
-        toastType.value = type;
-        timeout.value = setTimeout(() => {
-          console.log("타임아웃");
-          showToast.value = false;
-          toastMessage.value = "";
-          toastType.value = "";
-        }, 3000);
-      };
 
       return {
         addTodo,

@@ -57,6 +57,7 @@
   } from "vue";
   import _ from "lodash";
   import Toast from "@/components/Toast.vue"; // @ = src
+  import {useToast} from "@/composables/toast"; // @ = src
 
   export default {
     components: {
@@ -80,7 +81,6 @@
       });
       onUnmounted(() => {
         console.log("unmounted");
-        clearTimeout(timeout.value); // 불필요한 메모리 정리
       });
 
       console.log("hello"); // setup 함수 상의 라이프사이클 함수들이 등록되는 시점에 실행됨. 이후 라이프사이클함수가 실행됨
@@ -91,10 +91,8 @@
       const loading = ref(true);
       const SERVER_URL = "http://localhost:3000/todos";
       const todoId = route.params.id;
-      const showToast = ref(false);
-      const toastMessage = ref("");
-      const toastType = ref("");
-      const timeout = ref(null);
+
+      const {showToast, triggerToast, toastMessage, toastType} = useToast();
 
       const getTodo = async () => {
         try {
@@ -134,18 +132,6 @@
         } catch (error) {
           triggerToast("에러 발생", "danger");
         }
-      };
-
-      const triggerToast = (msg, type = "success") => {
-        showToast.value = true;
-        toastMessage.value = msg;
-        toastType.value = type;
-        timeout.value = setTimeout(() => {
-          console.log("타임아웃");
-          showToast.value = false;
-          toastMessage.value = "";
-          toastType.value = "";
-        }, 3000);
       };
 
       return {
