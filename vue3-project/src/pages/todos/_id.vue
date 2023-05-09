@@ -80,9 +80,10 @@
       });
       onUnmounted(() => {
         console.log("unmounted");
+        clearTimeout(timeout.value); // 불필요한 메모리 정리
       });
 
-      console.log("hello");  // setup 함수 상의 라이프사이클 함수들이 등록되는 시점에 실행됨. 이후 라이프사이클함수가 실행됨
+      console.log("hello"); // setup 함수 상의 라이프사이클 함수들이 등록되는 시점에 실행됨. 이후 라이프사이클함수가 실행됨
       const route = useRoute();
       const router = useRouter();
       const todo = ref(null);
@@ -93,6 +94,7 @@
       const showToast = ref(false);
       const toastMessage = ref("");
       const toastType = ref("");
+      const timeout = ref(null);
 
       const getTodo = async () => {
         try {
@@ -138,7 +140,8 @@
         showToast.value = true;
         toastMessage.value = msg;
         toastType.value = type;
-        setTimeout(() => {
+        timeout.value = setTimeout(() => {
+          console.log("타임아웃");
           showToast.value = false;
           toastMessage.value = "";
           toastType.value = "";
