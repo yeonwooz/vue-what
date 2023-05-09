@@ -11,7 +11,7 @@ export const useToast = () => {
   // const showToast = computed(() => store.state.toast.showToast);
 
   const triggerToast = (msg, type = "success") => {
-    store.dispatch("toast/triggerToast", msg, type);
+    store.dispatch("toast/triggerToast", {msg, type});
   };
 
   return {

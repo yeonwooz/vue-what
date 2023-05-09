@@ -27,14 +27,16 @@ export default {
   },
 
   actions: {
-    triggerToast({commit}, msg, type = "success") {
+    triggerToast({commit}, payload) {
       //   commit("UPDATE_TOAST_MESSAGE", msg);
       //   commit("UPDATE_TOAST_TYPE", type);
       //   commit("UPDATE_TOAST_STATUS", true);
+      //   const {msg, type} = payload;
+
       commit("ADD_TOAST", {
         id: Date.now(),
-        msg,
-        type,
+        msg: payload.msg,
+        type: payload.type || "success",
       });
       setTimeout(() => {
         // commit("UPDATE_TOAST_MESSAGE", "");
