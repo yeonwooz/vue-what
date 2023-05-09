@@ -15,7 +15,7 @@
   </div>
   <transition name="fade">
   <Toast v-if="showToast" :message="toastMessage" :type="toastType" />
-  </transition> 
+  </transition>
 </template>
 
 <script>
