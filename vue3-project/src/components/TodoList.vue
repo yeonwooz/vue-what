@@ -8,20 +8,17 @@
     style="cursor: pointer"
   >
     <div class="card-body p-2 d-flex align-items-center">
-      <div class="form-check flex-grow-1">
+      <div class="flex-grow-1">
         <input
-          class="form-check-input"
+          class="mx-2"
           type="checkbox"
           :value="todo.completed"
           @change="toggleTodo(todo.id, $event)"
           @click.stop
         />
-        <label
-          class="form-check-label"
-          :class="{todo: todo.completed}"
-          style="cursor: pointer"
-          >{{ todo.subject }}</label
-        >
+        <span :class="{todo: todo.completed}" style="cursor: pointer">{{
+          todo.subject
+        }}</span>
       </div>
       <div>
         <button class="btn btn-danger" @click.stop="deleteTodo(todo.id)">
