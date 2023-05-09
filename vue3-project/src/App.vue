@@ -13,9 +13,7 @@
   <div class="container">
     <router-view />
   </div>
-  <transition name="fade">
   <Toast v-if="showToast" :message="toastMessage" :type="toastType" />
-  </transition>
 </template>
 
 <script>
