@@ -26,7 +26,7 @@
     </div>
     <div class="col-12">
       <div class="form-group">
-        <label>Body</label>
+        <label>내용</label>
         <textarea
           class="form-control"
           style="resize: none"
@@ -39,7 +39,7 @@
     </div>
     <div class="mt-2">
       <button type="submit" class="btn btn-primary" :disabled="!todoUpdated">
-        저장
+        {{ editing ? "수정" : "생성" }}
       </button>
       <button
         type="button"
@@ -51,7 +51,6 @@
     </div>
   </form>
   <Toast v-if="showToast" :message="toastMessage" :type="toastType" />
-  <div id="sean">coder</div>
 </template>
 
 <script>
@@ -148,13 +147,13 @@
       };
 
       const onSave = async () => {
-        if (!todoUpdated.value) return;
         try {
-          console.log("change");
-          await axios.put(`${SERVER_URL}/${todoId}`, {
-            subject: todo.value.subject,
-            completed: todo.value.completed,
-          });
+          if (props.editing) {
+            if (!todoUpdated.value) return;
+            await axios.patch(`${SERVER_URL}/${todoId}`, todo.value);
+          } else {
+            await axios.post(SERVER_URL, todo.value);
+          }
           triggerToast("저장 완료");
         } catch (error) {
           triggerToast("에러 발생", "danger");
