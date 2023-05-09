@@ -193,8 +193,13 @@
   };
 </script>
 
-<style>
+<style scoped> 
+/* scoped style : 기본으로 전역설정되는데 scoped 를 추가하면 해당 스코프에만 적용됨 */
   .text-red {
     color: red;
   }
+</style>
+
+<style>
+/* 전역 스타일 */
 </style>
