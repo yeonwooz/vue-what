@@ -171,6 +171,10 @@
             todo.value.subject = "";
             todo.value.body = "";
             todo.value.completed = false;
+
+            router.push({
+              name: "Todos",
+            });
           }
           triggerToast(`${props.editing ? "수정" : "생성"}되었습니다!`);
         } catch (error) {
