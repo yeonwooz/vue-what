@@ -1,6 +1,11 @@
 <template>
   <div>
-    <h2>할일</h2>
+    <div class="d-flex justify-content-between my-2">
+      <h2>할일</h2>
+      <button class="btn btn-primary" @click="moveToCreatePage">
+        할일 생성하기
+      </button>
+    </div>
     <input
       class="form-control"
       type="text"
@@ -9,8 +14,6 @@
       @keyup.enter="searchTodo"
     />
     <hr />
-    <TodoSimpleFormVue @add-todo="addTodo" />
-    <div style="color: red">{{ serverError }}</div>
     <TodoList
       :todos="todos"
       @toggle-todo="toggleTodo"
@@ -55,20 +58,20 @@
   import axios from "axios";
   import TodoList from "@/components/TodoList.vue";
   // @ = src
-  import TodoSimpleFormVue from "@/components/TodoSimpleForm.vue";
   const SERVER_URL = "http://localhost:3000/todos";
   import {ref, computed, watch} from "vue";
   import Toast from "@/components/Toast.vue"; // @ = src
   import {useToast} from "@/composables/toast";
+  import {useRouter} from "vue-router";
 
   export default {
     components: {
-      TodoSimpleFormVue,
       TodoList,
       Toast,
     },
 
     setup() {
+      const router = useRouter();
       const todos = ref([]);
       const serverError = ref("");
       const todoCount = ref(0);
@@ -144,6 +147,12 @@
         searchTodo();
       });
 
+      const moveToCreatePage = () => {
+        router.push({
+          name: "TodoCreate",
+        });
+      };
+
       return {
         addTodo,
         toggleTodo,
@@ -159,6 +168,7 @@
         triggerToast,
         toastMessage,
         toastType,
+        moveToCreatePage,
       };
     },
   };

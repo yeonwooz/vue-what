@@ -1,6 +1,6 @@
 <template>
-  <h1>일정</h1>
-  <TodoForm :editing="true" />
+  <h1>할일 생성하기</h1>
+  <TodoForm />
 </template>
 
 <script>
