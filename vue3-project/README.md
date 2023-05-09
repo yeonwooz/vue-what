@@ -1,24 +1,21 @@
 # vue3-project
 
-## Project setup
-```
-yarn install
-```
+## 프로젝트 시작(웹서버, db서버 실행)
 
-### Compiles and hot-reloads for development
 ```
-yarn serve
-```
+npm start
 
-### Compiles and minifies for production
-```
-yarn build
+// 웹서버, db서버 각각 실행하고 싶은 경우
+npm run serve  // 웹서버 실행
+npm run watch  // db서버 실행
 ```
 
 ### Lints and fixes files
+
 ```
-yarn lint
+npm run lint
 ```
 
 ### Customize configuration
+
 See [Configuration Reference](https://cli.vuejs.org/config/).
