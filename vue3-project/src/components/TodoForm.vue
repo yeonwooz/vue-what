@@ -6,6 +6,7 @@
         <div class="form-group">
           <label>제목</label>
           <input v-model="todo.subject" type="text" class="form-control" />
+          <div v-if="subjectError" class="text-red">{{ subjectError }}</div>
         </div>
       </div>
       <div v-if="editing" class="col-6">
@@ -112,6 +113,7 @@
       const loading = ref(false);
       const SERVER_URL = "http://localhost:3000/todos";
       const todoId = route.params.id;
+      const subjectError = ref("");
 
       const {showToast, triggerToast, toastMessage, toastType} = useToast();
 
@@ -146,7 +148,18 @@
         });
       };
 
+      const validate = () => {
+        subjectError.value = "";
+
+        if (!todo.value.subject) {
+          subjectError.value = "제목은 필수입니다.";
+          return false;
+        }
+        return true;
+      };
+
       const onSave = async () => {
+        if (!validate()) return;
         try {
           if (props.editing) {
             if (!todoUpdated.value) return;
@@ -174,9 +187,14 @@
         triggerToast,
         toastMessage,
         toastType,
+        subjectError,
       };
     },
   };
 </script>
 
-<style></style>
+<style>
+  .text-red {
+    color: red;
+  }
+</style>
