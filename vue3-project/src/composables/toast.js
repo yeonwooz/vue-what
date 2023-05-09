@@ -1,4 +1,4 @@
-import {ref} from "vue";
+import {onUnmounted, ref} from "vue";
 
 export const useToast = () => {
   const showToast = ref(false);
@@ -16,6 +16,11 @@ export const useToast = () => {
       toastType.value = "";
     }, 3000);
   };
+
+  onUnmounted(() => {
+    clearTimeout(timeout.value);
+  });
+  
   return {
     showToast,
     triggerToast,
