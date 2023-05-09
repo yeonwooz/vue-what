@@ -51,9 +51,6 @@
       </button>
     </div>
   </form>
-  <transition name="fade">
-    <Toast v-if="showToast" :message="toastMessage" :type="toastType" />
-  </transition>
 </template>
 
 <script>
@@ -70,13 +67,9 @@
     onUnmounted,
   } from "vue";
   import _ from "lodash";
-  import Toast from "@/components/Toast.vue"; // @ = src
   import {useToast} from "@/composables/toast"; // @ = src
 
   export default {
-    components: {
-      Toast,
-    },
     props: {
       editing: {
         type: Boolean,
@@ -203,24 +196,5 @@
   /* scoped style : 기본으로 전역설정되는데 scoped 를 추가하면 해당 스코프에만 적용됨 */
   .text-red {
     color: red;
-  }
-</style>
-
-<style>
-  /* 전역 스타일 */
-  .fade-enter-active,
-  .fade-leave-active {
-    transition: all 0.5s ease;
-  }
-
-  .fade-enter-from,
-  .fade-leave-to {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  .fade-enter-to,
-  .fade-leave-from {
-    opacity: 1;
-    transform: translateY(0px);
   }
 </style>

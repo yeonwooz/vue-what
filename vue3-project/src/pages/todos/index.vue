@@ -51,7 +51,6 @@
       </ul>
     </div>
   </div>
-  <Toast v-if="showToast" :message="toastMessage" :type="toastType" />
 </template>
 
 <script>
@@ -60,14 +59,12 @@
   // @ = src
   const SERVER_URL = "http://localhost:3000/todos";
   import {ref, computed, watch} from "vue";
-  import Toast from "@/components/Toast.vue"; // @ = src
   import {useToast} from "@/composables/toast";
   import {useRouter} from "vue-router";
 
   export default {
     components: {
       TodoList,
-      Toast,
     },
 
     setup() {
