@@ -51,7 +51,9 @@
       </button>
     </div>
   </form>
-  <Toast v-if="showToast" :message="toastMessage" :type="toastType" />
+  <transition name="fade">
+    <Toast v-if="showToast" :message="toastMessage" :type="toastType" />
+  </transition>
 </template>
 
 <script>
@@ -193,13 +195,26 @@
   };
 </script>
 
-<style scoped> 
-/* scoped style : 기본으로 전역설정되는데 scoped 를 추가하면 해당 스코프에만 적용됨 */
+<style scoped>
+  /* scoped style : 기본으로 전역설정되는데 scoped 를 추가하면 해당 스코프에만 적용됨 */
   .text-red {
     color: red;
   }
 </style>
 
 <style>
-/* 전역 스타일 */
+  /* 전역 스타일 */
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+  .fade-enter-to,
+  .fade-leave-from {
+    opacity: 1;
+  }
 </style>
