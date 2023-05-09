@@ -153,8 +153,11 @@
             await axios.patch(`${SERVER_URL}/${todoId}`, todo.value);
           } else {
             await axios.post(SERVER_URL, todo.value);
+            todo.value.subject = "";
+            todo.value.body = "";
+            todo.value.completed = false;
           }
-          triggerToast("저장 완료");
+          triggerToast(`${props.editing ? "수정" : "생성"}되었습니다!`);
         } catch (error) {
           triggerToast("에러 발생", "danger");
         }
