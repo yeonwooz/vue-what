@@ -54,10 +54,10 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import axios from "@/axios";
   import TodoList from "@/components/TodoList.vue";
   // @ = src
-  const SERVER_URL = "http://localhost:3000/todos";
+  const SERVER_URL = "todos";
   import {ref, computed, watch} from "vue";
   import {useToast} from "@/composables/toast";
   import {useRouter} from "vue-router";

@@ -54,7 +54,7 @@
 </template>
 
 <script>
-  import axios from "axios";
+  import axios from "@/axios";
   import {useRoute, useRouter} from "vue-router";
   import {
     ref,
@@ -110,7 +110,7 @@
       });
       const originalTodo = ref(null);
       const loading = ref(false);
-      const SERVER_URL = "http://localhost:3000/todos";
+      const SERVER_URL = "todos";
       const todoId = route.params.id;
       const subjectError = ref("");
 
