@@ -1,10 +1,5 @@
 <template>
-  <div
-    id="exampleModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
+  <div class="modal-wrapper">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -34,4 +29,14 @@
   export default {};
 </script>
 
-<style></style>
+<style scoped>
+  .modal-wrapper {
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+</style>
