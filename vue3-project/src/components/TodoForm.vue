@@ -3,11 +3,12 @@
   <form v-else @submit.prevent="onSave">
     <div class="row col-12">
       <div class="col-6">
-        <div class="form-group">
-          <label>제목</label>
-          <input v-model="todo.subject" type="text" class="form-control" />
-          <div v-if="subjectError" class="text-red">{{ subjectError }}</div>
-        </div>
+        <Input
+          label="제목"
+          :subject="todo.subject"
+          :error="subjectError"
+          @update-subject="updateSubject"
+        />
       </div>
       <div v-if="editing" class="col-6">
         <div class="form-group">
@@ -68,8 +69,12 @@
   } from "vue";
   import _ from "lodash";
   import {useToast} from "@/composables/toast"; // @ = src
+  import Input from "@/components/Input.vue";
 
   export default {
+    components: {
+      Input,
+    },
     props: {
       editing: {
         type: Boolean,
@@ -175,6 +180,11 @@
         }
       };
 
+      const updateSubject = newValue => {
+        todo.value.subject = newValue;
+        console.log(todo.value.subject);
+      };
+
       return {
         todo,
         toggleStatus,
@@ -187,14 +197,8 @@
         toastMessage,
         toastType,
         subjectError,
+        updateSubject,
       };
     },
   };
 </script>
-
-<style scoped>
-  /* scoped style : 기본으로 전역설정되는데 scoped 를 추가하면 해당 스코프에만 적용됨 */
-  .text-red {
-    color: red;
-  }
-</style>

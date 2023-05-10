@@ -1,12 +1,5 @@
 <template>
   <div class="p-2" v-if="!todos.length">검색결과 없음</div>
-  <!-- <div
-    class="card my-2"
-    v-for="todo in todos"
-    :key="todo.id"
-    @click="moveToTodoPage(todo.id)"
-    style="cursor: pointer"
-  > -->
   <List :items="todos">
     <template #default="{item}">
       <div
@@ -34,7 +27,6 @@
       </div>
     </template>
   </List>
-  <!-- </div> -->
   <teleport to="#modal">
     <DeleteModal v-if="showModal" @close="closeModal" @delete="deleteTodo" />
   </teleport>
