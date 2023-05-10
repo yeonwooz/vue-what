@@ -13,43 +13,18 @@
       placeholder="찾을 내용"
       @keyup.enter="searchTodo"
     />
-    <hr />
     <TodoList
       :todos="todos"
       @toggle-todo="toggleTodo"
       @delete-todo="deleteTodo"
     />
-    <div class="d-flex justify-content-center">
-      <ul class="pagination">
-        <li class="page-item" v-if="currentPage !== 1">
-          <a
-            class="page-link"
-            :class="currentPage === page && 'active'"
-            style="cursor: pointer"
-            @click="getTodos(currentPage - 1)"
-            >이전</a
-          >
-        </li>
-        <li class="page-item" v-for="page in pageCount" :key="page">
-          <a
-            class="page-link"
-            :class="currentPage === page && 'active'"
-            style="cursor: pointer"
-            @click="getTodos(page)"
-            >{{ page }}</a
-          >
-        </li>
-        <li class="page-item" v-if="currentPage < pageCount">
-          <a
-            class="page-link"
-            :class="currentPage === page && 'active'"
-            style="cursor: pointer"
-            @click="getTodos(currentPage + 1)"
-            >다음</a
-          >
-        </li>
-      </ul>
-    </div>
+    <hr />
+    <Pagination
+      v-if="todos.length"
+      :pageCount="pageCount"
+      :currentPage="currentPage"
+      @click="getTodos"
+    />
   </div>
 </template>
 
@@ -61,10 +36,12 @@
   import {ref, computed, watch} from "vue";
   import {useToast} from "@/composables/toast";
   import {useRouter} from "vue-router";
+  import Pagination from "@/components/Pagination.vue";
 
   export default {
     components: {
       TodoList,
+      Pagination,
     },
 
     setup() {
