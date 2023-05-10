@@ -3,22 +3,28 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title">할일 삭제</h5>
           <button
             type="button"
             class="close"
-            data-dismiss="modal"
             aria-label="Close"
+            @click="onClose"
           >
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">...</div>
+        <div class="modal-body">삭제하시겠습니까?</div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">
-            Close
+          <button type="button" class="btn btn-secondary" @click="onClose">
+            취소
           </button>
-          <button type="button" class="btn btn-primary">Save changes</button>
+          <button
+            type="button"
+            class="btn btn-danger"
+            @click="[deleteTodo(), onClose()]"
+          >
+            삭제
+          </button>
         </div>
       </div>
     </div>
@@ -26,7 +32,21 @@
 </template>
 
 <script>
-  export default {};
+  export default {
+    setup(props, {emit}) {
+      const deleteTodo = () => {
+        emit("delete-todo");
+      };
+
+      const onClose = () => {
+        emit("close");
+      };
+      return {
+        deleteTodo,
+        onClose,
+      };
+    },
+  };
 </script>
 
 <style scoped>

@@ -21,13 +21,13 @@
         }}</span>
       </div>
       <div>
-        <button class="btn btn-danger" @click.stop="deleteTodo(todo.id)">
+        <button class="btn btn-danger" @click.stop="openModal(todo.id)">
           삭제
         </button>
       </div>
     </div>
   </div>
-  <Modal />
+  <Modal v-if="showModal" @close="closeModal" @delete-todo="deleteTodo" />
 </template>
 
 <script>
@@ -55,6 +55,9 @@
     },
     emits: ["toggle-todo", "delete-todo"],
     setup(props, context) {
+      const router = useRouter();
+      const showModal = ref(false);
+      const idToDelete = ref(null);
       const hasError = ref(false);
       const todoStyle = {
         textDecoration: "line-through",
@@ -66,11 +69,20 @@
         context.emit("toggle-todo", id, event.target.checked);
       };
 
-      const deleteTodo = id => {
-        context.emit("delete-todo", id);
+      const openModal = id => {
+        idToDelete.value = id;
+        showModal.value = true;
       };
 
-      const router = useRouter();
+      const closeModal = () => {
+        idToDelete.value = null;
+        showModal.value = false;
+      };
+
+      const deleteTodo = () => {
+        context.emit("delete-todo", idToDelete.value);
+      };
+
       const moveToTodoPage = id => {
         // router.push(`/todos/${id}`);
         router.push({
@@ -87,6 +99,9 @@
         toggleTodo,
         deleteTodo,
         moveToTodoPage,
+        showModal,
+        openModal,
+        closeModal,
       };
     },
   };
