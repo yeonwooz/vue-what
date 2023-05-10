@@ -33,4 +33,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 [] 페이지네이션 '이전', '다음' 버튼 위치 고정
 
-[] 메인 홈 이미지 삽입
+[X] 메인 홈 이미지 삽입

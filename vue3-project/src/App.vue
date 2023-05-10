@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light">
     <router-link class="navbar-brand px-2" :to="{name: 'Home'}">
       <span>SEAN's TODO</span>
     </router-link>
@@ -29,6 +29,10 @@
 </script>
 
 <style>
+  nav {
+    z-index: 1;
+    background: rgb(232, 245, 255, 0.5);
+  }
   .router-link-exact-active {
     /* border: solid 1px rgb(4, 115, 220); */
     background: rgba(4, 115, 220, 0.8);
