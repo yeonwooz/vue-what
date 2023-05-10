@@ -3,7 +3,7 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">할일 삭제</h5>
+          <h5 class="modal-title"><slot name="title" /></h5>
           <button
             type="button"
             class="close"
@@ -13,18 +13,9 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">삭제하시겠습니까?</div>
+        <div class="modal-body"><slot name="body" /></div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" @click="onClose">
-            취소
-          </button>
-          <button
-            type="button"
-            class="btn btn-danger"
-            @click="[onDelete(), onClose()]"
-          >
-            삭제
-          </button>
+          <slot name="footer" />
         </div>
       </div>
     </div>
@@ -34,15 +25,10 @@
 <script>
   export default {
     setup(props, {emit}) {
-      const onDelete = () => {
-        emit("delete");
-      };
-
       const onClose = () => {
         emit("close");
       };
       return {
-        onDelete,
         onClose,
       };
     },
