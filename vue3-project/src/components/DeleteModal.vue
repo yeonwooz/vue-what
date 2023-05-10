@@ -1,8 +1,8 @@
 <template>
   <Modal>
-    <template v-slot:title>할일 삭제</template>
-    <template v-slot:body>삭제하시겠습니까?</template>
-    <template v-slot:footer>
+    <template #title>할일 삭제</template>
+    <template #body>삭제하시겠습니까?</template>
+    <template #footer>
       <button type="button" class="btn btn-secondary" @click="onClose">
         취소
       </button>
