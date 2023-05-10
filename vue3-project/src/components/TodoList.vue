@@ -37,7 +37,7 @@
       // composition API:
       Composition API is a set of APIs that allows us to author Vue components using imported functions instead of declaring options.
   */
-  import {ref} from "vue";
+  import {getCurrentInstance, ref} from "vue";
   import {useRouter} from "vue-router";
   import DeleteModal from "@/components/DeleteModal.vue";
   import List from "@/components/List.vue";
@@ -58,7 +58,9 @@
       // },
     },
     emits: ["toggle-todo", "delete-todo"],
-    setup(props, context) {
+    setup() {
+      const {emit} = getCurrentInstance();
+
       const router = useRouter();
       const showModal = ref(false);
       const idToDelete = ref(null);
@@ -70,7 +72,7 @@
 
       const toggleTodo = (id, event) => {
         // * 자식이 부모의 props를 바꾸는 것은 안티패턴
-        context.emit("toggle-todo", id, event.target.checked);
+        emit("toggle-todo", id, event.target.checked);
       };
 
       const openModal = id => {
@@ -84,7 +86,7 @@
       };
 
       const deleteTodo = () => {
-        context.emit("delete-todo", idToDelete.value);
+        emit("delete-todo", idToDelete.value);
       };
 
       const moveToTodoPage = id => {

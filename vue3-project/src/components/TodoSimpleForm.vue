@@ -22,11 +22,13 @@
     // composition API:
     Composition API is a set of APIs that allows us to author Vue components using imported functions instead of declaring options.
    */
-  import {ref} from "vue";
+  import {getCurrentInstance, ref} from "vue";
 
   export default {
     emits: ["add-todo"],
-    setup(props, {emit}) {
+    setup() {
+      const {emit} = getCurrentInstance();
+
       const todo = ref("");
 
       const hasError = ref(false);
