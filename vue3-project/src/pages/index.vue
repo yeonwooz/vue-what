@@ -1,7 +1,21 @@
-<template><div class="homeImg"></div></template>
+<template>
+  <div>{{ count }}</div>
+  <button @click="count++">ADD</button>
+  <!-- <div class="homeImg"></div> -->
+</template>
 
 <script>
-  export default {};
+  import {useCount} from "@/composables/count";
+
+  export default {
+    setup() {
+      const {count} = useCount();
+      
+      return {
+        count,
+      };
+    },
+  };
 </script>
 
 <style>
