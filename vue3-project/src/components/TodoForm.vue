@@ -5,9 +5,8 @@
       <div class="col-6">
         <Input
           label="제목"
-          :subject="todo.subject"
+          v-model:subject="todo.subject"
           :error="subjectError"
-          @update-subject="updateSubject"
         />
       </div>
       <div v-if="editing" class="col-6">
@@ -92,7 +91,7 @@
         console.log("before update");
       });
       onUpdated(() => {
-        console.log("updated");
+        console.log("updated", todo.value.subject);
       });
       onBeforeUnmount(() => {
         console.log("before unmount");
@@ -180,11 +179,6 @@
         }
       };
 
-      const updateSubject = newValue => {
-        todo.value.subject = newValue;
-        console.log(todo.value.subject);
-      };
-
       return {
         todo,
         toggleStatus,
@@ -197,7 +191,6 @@
         toastMessage,
         toastType,
         subjectError,
-        updateSubject,
       };
     },
   };

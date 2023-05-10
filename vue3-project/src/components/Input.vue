@@ -24,7 +24,7 @@
     },
     setup(props, {emit}) {
       const onInput = e => {
-        emit("update-subject", e.target?.value);
+        emit("update:subject", e.target.value);
       };
 
       return {
