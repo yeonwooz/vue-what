@@ -27,7 +27,7 @@
       </div>
     </div>
   </div>
-  <Modal v-if="showModal" @close="closeModal" @delete-todo="deleteTodo" />
+  <Modal v-if="showModal" @close="closeModal" @delete="deleteTodo" />
 </template>
 
 <script>

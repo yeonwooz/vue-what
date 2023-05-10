@@ -21,7 +21,7 @@
           <button
             type="button"
             class="btn btn-danger"
-            @click="[deleteTodo(), onClose()]"
+            @click="[onDelete(), onClose()]"
           >
             삭제
           </button>
@@ -34,15 +34,15 @@
 <script>
   export default {
     setup(props, {emit}) {
-      const deleteTodo = () => {
-        emit("delete-todo");
+      const onDelete = () => {
+        emit("delete");
       };
 
       const onClose = () => {
         emit("close");
       };
       return {
-        deleteTodo,
+        onDelete,
         onClose,
       };
     },
