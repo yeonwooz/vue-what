@@ -29,7 +29,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 [X] 삭제기능
 
 ### 추가로 생각하고 있는 기능
-[] 현재 방문중인페이지 상단 탭 활성화(active)
+[X] 현재 방문중인페이지 상단 탭 활성화(active)
 
 [] 페이지네이션 '이전', '다음' 버튼 위치 고정
 
