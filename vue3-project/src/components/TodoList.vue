@@ -1,32 +1,40 @@
 <template>
   <div class="p-2" v-if="!todos.length">검색결과 없음</div>
-  <div
+  <!-- <div
     class="card my-2"
     v-for="todo in todos"
     :key="todo.id"
     @click="moveToTodoPage(todo.id)"
     style="cursor: pointer"
-  >
-    <div class="card-body p-2 d-flex align-items-center">
-      <div class="flex-grow-1">
-        <input
-          class="mx-2"
-          type="checkbox"
-          :value="todo.completed"
-          @change="toggleTodo(todo.id, $event)"
-          @click.stop
-        />
-        <span :class="{todo: todo.completed}" style="cursor: pointer">{{
-          todo.subject
-        }}</span>
+  > -->
+  <List :items="todos">
+    <template #default="{item}">
+      <div
+        class="card-body p-2 d-flex align-items-center"
+        @click="moveToTodoPage(item.id)"
+        style="cursor: pointer"
+      >
+        <div class="flex-grow-1">
+          <input
+            class="mx-2"
+            type="checkbox"
+            :value="item.completed"
+            @change="toggleTodo(item.id, $event)"
+            @click.stop
+          />
+          <span :class="{todo: item.completed}" style="cursor: pointer">{{
+            item.subject
+          }}</span>
+        </div>
+        <div>
+          <button class="btn btn-danger" @click.stop="openModal(item.id)">
+            삭제
+          </button>
+        </div>
       </div>
-      <div>
-        <button class="btn btn-danger" @click.stop="openModal(todo.id)">
-          삭제
-        </button>
-      </div>
-    </div>
-  </div>
+    </template>
+  </List>
+  <!-- </div> -->
   <teleport to="#modal">
     <DeleteModal v-if="showModal" @close="closeModal" @delete="deleteTodo" />
   </teleport>
@@ -40,10 +48,12 @@
   import {ref} from "vue";
   import {useRouter} from "vue-router";
   import DeleteModal from "@/components/DeleteModal.vue";
+  import List from "@/components/List.vue";
 
   export default {
     components: {
       DeleteModal,
+      List,
     },
     props: {
       todos: {
