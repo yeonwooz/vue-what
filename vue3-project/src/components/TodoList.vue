@@ -27,6 +27,7 @@
       </div>
     </div>
   </div>
+  <Modal />
 </template>
 
 <script>
@@ -36,8 +37,12 @@
   */
   import {ref} from "vue";
   import {useRouter} from "vue-router";
+  import Modal from "@/components/Modal.vue";
 
   export default {
+    components: {
+      Modal,
+    },
     props: {
       todos: {
         type: Array,

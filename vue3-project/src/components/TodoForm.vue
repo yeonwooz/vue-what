@@ -1,7 +1,7 @@
 <template>
   <div v-if="loading">...불러오는중</div>
   <form v-else @submit.prevent="onSave">
-    <div class="row">
+    <div class="row col-12">
       <div class="col-6">
         <div class="form-group">
           <label>제목</label>
