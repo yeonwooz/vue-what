@@ -1,7 +1,7 @@
 <template>
-  <div>{{ count }}</div>
-  <button @click="count++">ADD</button>
-  <!-- <div class="homeImg"></div> -->
+  <!-- <div>{{ count }}</div>
+  <button @click="count++">ADD</button> -->
+  <div class="homeImg"></div>
 </template>
 
 <script>
@@ -10,7 +10,7 @@
   export default {
     setup() {
       const {count} = useCount();
-      
+
       return {
         count,
       };
